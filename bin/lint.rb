@@ -1135,11 +1135,13 @@ module Gtn
     # GTN:046 - Please do not add an # Introduction section, as it is unnecessary, please start directly into an abstract or hook for your tutorial that will get the learner interested in the material.
     def self.useless_intro(contents)
       joined_contents = contents.join("\n")
-      joined_contents.scan(/\n---\n+# Introduction/m)
-        .map do |line|
+      joined_contents.enum_for(:scan, /^---\n+# Introduction$/m).map do
+        match = Regexp.last_match
+        target_line = joined_contents[0...match.end(0)].count("\n")
+
         ReviewDogEmitter.error(
           path: @path,
-          idx: 0,
+          idx: target_line,
           match_start: 0,
           match_end: 0,
           replacement: '',
