@@ -19,7 +19,7 @@ on:
       - CONTRIBUTORS.yaml
       - GRANTS.yaml
       - ORGANISATIONS.yaml
-
+  workflow_dispatch:
 
 jobs:
   lint:
